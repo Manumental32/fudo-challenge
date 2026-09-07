@@ -1,0 +1,129 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand: #f15a24;
+  --color-brand-hover: #d3450b;
+  --color-brand-text: #d3450b;
+  --color-danger: #8b2e1a;
+  --color-danger-hover: #6f2414;
+  --color-danger-soft: #f8e8e1;
+  --color-danger-line: #e8c4b4;
+  --color-ink: #333333;
+  --color-copy: #555555;
+  --color-muted: #6b6b6b;
+  --color-canvas: #f7f7f7;
+  --color-sage: #f0f0f0;
+  --color-line: #d6d6d6;
+  --font-sans: Montserrat, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Montserrat, ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--color-canvas);
+  color: var(--color-copy);
+  font-family: var(--font-sans);
+}
+
+dialog {
+  margin: auto;
+}
+
+@keyframes avatar-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.avatar-swap {
+  animation: avatar-in 320ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-swap {
+    animation: none;
+  }
+}
+
+:where(a, button, [role='button']):focus-visible {
+  outline: 2px solid var(--color-brand-text);
+  outline-offset: 2px;
+}
+
+.rich-text :where(p) {
+  margin: 0 0 0.5rem;
+}
+
+.rich-text :where(p:last-child) {
+  margin-bottom: 0;
+}
+
+.rich-text :where(h2) {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0.75rem 0 0.4rem;
+}
+
+.rich-text :where(h3) {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.65rem 0 0.35rem;
+}
+
+.rich-text :where(ul) {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin: 0.4rem 0;
+}
+
+.rich-text :where(ol) {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin: 0.4rem 0;
+}
+
+.rich-text :where(blockquote) {
+  border-left: 3px solid var(--color-line);
+  color: var(--color-muted);
+  margin: 0.5rem 0;
+  padding-left: 0.75rem;
+}
+
+.rich-text :where(a) {
+  color: var(--color-brand-text);
+  text-decoration: underline;
+}
+
+.rich-text :where(code) {
+  background: var(--color-sage);
+  border-radius: 3px;
+  font-size: 0.85em;
+  padding: 0.1rem 0.3rem;
+}
+
+.rich-text :where(pre) {
+  background: var(--color-sage);
+  border-radius: 6px;
+  overflow-x: auto;
+  padding: 0.6rem 0.75rem;
+}
+
+.rich-text :where(pre code) {
+  background: transparent;
+  padding: 0;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--color-muted);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
