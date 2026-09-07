@@ -9,6 +9,7 @@ import { LoadMoreTail } from '../../ui/LoadMoreTail';
 import { Modal } from '../../ui/Modal';
 import { PostCard, PostCardSkeleton } from './PostCard';
 import { PostForm } from './PostForm';
+import { scrollToTop } from '../../lib/scrollToTop';
 import { useCreatePost } from './hooks/useCreatePost';
 import { useDeletePost } from './hooks/useDeletePost';
 import { usePosts } from './hooks/usePosts';
@@ -152,7 +153,12 @@ export function PostList() {
             }
             onSubmit={(values) => {
               createPost.mutate(values, {
-                onSuccess: () => setCreateOpen(false),
+                onSuccess: () => {
+                  setCreateOpen(false);
+                  window.setTimeout(() => {
+                    scrollToTop();
+                  }, 0);
+                },
               });
             }}
           />
