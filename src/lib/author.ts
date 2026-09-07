@@ -4,6 +4,7 @@ const LEGACY_NAME_KEY = 'fudo-author-name';
 const STORAGE_KEY = 'fudo-session';
 const AUTHOR_EVENT = 'fudo-author-changed';
 const LOGIN_EVENT = 'fudo-request-login';
+const CREATE_POST_EVENT = 'fudo-request-create-post';
 
 export interface SessionUser {
   name: string;
@@ -144,4 +145,13 @@ export function useCurrentAuthor(): string {
 export function subscribeLoginModal(onOpen: () => void): () => void {
   window.addEventListener(LOGIN_EVENT, onOpen);
   return () => window.removeEventListener(LOGIN_EVENT, onOpen);
+}
+
+export function requestCreatePost(): void {
+  window.dispatchEvent(new Event(CREATE_POST_EVENT));
+}
+
+export function subscribeCreatePost(onOpen: () => void): () => void {
+  window.addEventListener(CREATE_POST_EVENT, onOpen);
+  return () => window.removeEventListener(CREATE_POST_EVENT, onOpen);
 }

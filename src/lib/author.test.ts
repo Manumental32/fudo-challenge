@@ -5,7 +5,9 @@ import {
   isOwnAuthor,
   login,
   logout,
+  requestCreatePost,
   saveAuthorName,
+  subscribeCreatePost,
 } from './author';
 
 describe('session and ownership', () => {
@@ -29,6 +31,16 @@ describe('session and ownership', () => {
     expect(isOwnAuthor('María')).toBe(true);
     expect(isOwnAuthor('maria')).toBe(true);
     expect(isOwnAuthor('Pedro')).toBe(false);
+  });
+
+  it('notifies subscribers when a create post is requested', () => {
+    const onOpen = vi.fn();
+    const unsubscribe = subscribeCreatePost(onOpen);
+
+    requestCreatePost();
+
+    expect(onOpen).toHaveBeenCalledOnce();
+    unsubscribe();
   });
 
   it('clears the session on logout', () => {

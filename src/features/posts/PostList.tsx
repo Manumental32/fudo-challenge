@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { requestLogin, useSession } from '../../lib/author';
 import { getErrorMessage } from '../../lib/errors';
 import { useOnVisible } from '../../lib/useOnVisible';
 import type { Post } from '../../types';
@@ -9,15 +8,12 @@ import { LoadMoreTail } from '../../ui/LoadMoreTail';
 import { Modal } from '../../ui/Modal';
 import { PostCard, PostCardSkeleton } from './PostCard';
 import { PostForm } from './PostForm';
-import { scrollToTop } from '../../lib/scrollToTop';
-import { useCreatePost } from './hooks/useCreatePost';
 import { useDeletePost } from './hooks/useDeletePost';
 import { usePosts } from './hooks/usePosts';
 import { useUpdatePost } from './hooks/useUpdatePost';
 
 export function PostList() {
   const postsQuery = usePosts();
-  const createPost = useCreatePost();
   const updatePost = useUpdatePost();
   const deletePost = useDeletePost();
   const canLoadMore = Boolean(postsQuery.hasNextPage);
@@ -30,8 +26,6 @@ export function PostList() {
     },
   );
 
-  const session = useSession();
-  const [createOpen, setCreateOpen] = useState(false);
   const [editing, setEditing] = useState<Post | null>(null);
   const [deleting, setDeleting] = useState<Post | null>(null);
 
@@ -57,27 +51,13 @@ export function PostList() {
 
   return (
     <section className="flex flex-col gap-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-wide text-muted">
-            Feed
-          </p>
-          <h1 className="text-xl font-extrabold tracking-tight text-ink">
-            r/fudo
-          </h1>
-        </div>
-        <Button
-          onClick={() => {
-            if (!session) {
-              requestLogin();
-              return;
-            }
-
-            setCreateOpen(true);
-          }}
-        >
-          Crear post
-        </Button>
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wide text-muted">
+          Feed
+        </p>
+        <h1 className="text-xl font-extrabold tracking-tight text-ink">
+          r/fudo
+        </h1>
       </div>
 
       {postsQuery.isPending ? (
@@ -133,37 +113,6 @@ export function PostList() {
           </li>
         </ul>
       </LoadMoreTail>
-
-      <Modal
-        open={createOpen}
-        title="Nueva publicación"
-        onClose={() => {
-          setCreateOpen(false);
-          createPost.reset();
-        }}
-      >
-        {createOpen ? (
-          <PostForm
-            submitLabel="Publicar"
-            pending={createPost.isPending}
-            errorMessage={
-              createPost.isError
-                ? getErrorMessage(createPost.error, 'No se pudo publicar.')
-                : undefined
-            }
-            onSubmit={(values) => {
-              createPost.mutate(values, {
-                onSuccess: () => {
-                  setCreateOpen(false);
-                  window.setTimeout(() => {
-                    scrollToTop();
-                  }, 0);
-                },
-              });
-            }}
-          />
-        ) : null}
-      </Modal>
 
       <Modal
         open={editing !== null}

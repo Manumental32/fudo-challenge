@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { AuthBar } from '../features/auth/AuthBar';
 import { LoginModal } from '../features/auth/LoginModal';
+import { CreatePostModal } from '../features/posts/CreatePostModal';
 import { ScrollToTopButton } from '../ui/ScrollToTopButton';
 
 export function AppLayout() {
@@ -40,6 +41,7 @@ export function AppLayout() {
         <Outlet />
       </main>
       <LoginModal />
+      <CreatePostModal />
       <ScrollToTopButton />
     </div>
   );
