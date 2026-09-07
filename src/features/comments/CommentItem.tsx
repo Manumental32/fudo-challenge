@@ -5,14 +5,15 @@ import type { CommentNode } from '../../types';
 import { Avatar } from '../../ui/Avatar';
 import { Button } from '../../ui/Button';
 import { Modal } from '../../ui/Modal';
+import { PostBody } from '../posts/PostBody';
 import { CommentForm } from './CommentForm';
 import { useCreateComment } from './hooks/useCreateComment';
 import { useDeleteComment } from './hooks/useDeleteComment';
 import { useUpdateComment } from './hooks/useUpdateComment';
 
 interface CommentItemProps {
-  postId: string;
-  node: CommentNode;
+  readonly postId: string;
+  readonly node: CommentNode;
 }
 
 export function CommentItem({ postId, node }: CommentItemProps) {
@@ -54,9 +55,7 @@ export function CommentItem({ postId, node }: CommentItemProps) {
           />
         </div>
       ) : (
-        <p className="mt-1 whitespace-pre-wrap text-sm text-copy">
-          {node.content}
-        </p>
+        <PostBody content={node.content} className="mt-1 text-sm text-copy" />
       )}
       <div className="mt-1 flex flex-wrap gap-0">
         <Button

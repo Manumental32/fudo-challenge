@@ -1,10 +1,14 @@
 import { toDisplayHtml } from '../../lib/richText';
 
 interface PostBodyProps {
-  content: string;
+  readonly content: string;
+  readonly className?: string;
 }
 
-export function PostBody({ content }: PostBodyProps) {
+export function PostBody({
+  content,
+  className = 'text-[15px] leading-6 text-copy',
+}: PostBodyProps) {
   const html = toDisplayHtml(content);
 
   if (!html) {
@@ -13,7 +17,7 @@ export function PostBody({ content }: PostBodyProps) {
 
   return (
     <div
-      className="rich-text text-[15px] leading-6 text-copy"
+      className={`rich-text ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

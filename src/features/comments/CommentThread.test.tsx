@@ -128,6 +128,19 @@ describe('CommentThread', () => {
     expect(screen.getByRole('button', { name: 'Responder' })).toBeInTheDocument();
   });
 
+  it('renders comment HTML without executing unsafe tags', () => {
+    renderThread(
+      node({
+        id: 'root',
+        content: '<p>ok</p><script>alert(1)</script>',
+      }),
+    );
+
+    const comment = screen.getByTestId('comment-root');
+    expect(comment).toHaveTextContent('ok');
+    expect(comment.innerHTML.toLowerCase()).not.toContain('script');
+  });
+
   it('shows edit and delete on your own comment', () => {
     saveAuthorName('Ana');
 
