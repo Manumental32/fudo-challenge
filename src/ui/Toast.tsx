@@ -9,7 +9,9 @@ function useOpenDialog(): HTMLDialogElement | null {
 
   useEffect(() => {
     function sync(): void {
-      const openDialogs = Array.from(document.querySelectorAll('dialog[open]'));
+      const openDialogs = Array.from(
+        document.querySelectorAll<HTMLDialogElement>('dialog[open]'),
+      );
       setDialog(openDialogs.at(-1) ?? null);
     }
 
