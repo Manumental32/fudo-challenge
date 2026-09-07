@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { lazy, Suspense, useState, type FormEvent } from 'react';
 import { useSession } from '../../lib/author';
 import { isRichTextEmpty, sanitizeHtml } from '../../lib/richText';
 import type { Post } from '../../types';
@@ -6,7 +6,12 @@ import { Avatar } from '../../ui/Avatar';
 import { Button } from '../../ui/Button';
 import { ErrorBanner } from '../../ui/ErrorBanner';
 import { Input } from '../../ui/Input';
-import { RichTextEditor } from '../../ui/RichTextEditor';
+import { Skeleton } from '../../ui/Skeleton';
+
+const RichTextEditor = lazy(async () => {
+  const module = await import('../../ui/RichTextEditor');
+  return { default: module.RichTextEditor };
+});
 
 interface PostFormValues {
   name: string;
@@ -71,11 +76,24 @@ export function PostForm({
         onChange={(event) => setTitle(event.target.value)}
         required
       />
-      <RichTextEditor
-        label="Contenido"
-        value={content}
-        onChange={setContent}
-      />
+      <Suspense
+        fallback={
+          <div
+            className="flex flex-col gap-1"
+            aria-busy="true"
+            aria-label="Cargando editor"
+          >
+            <Skeleton className="h-3 w-20" />
+            <Skeleton className="h-36 w-full" />
+          </div>
+        }
+      >
+        <RichTextEditor
+          label="Contenido"
+          value={content}
+          onChange={setContent}
+        />
+      </Suspense>
       {errorMessage ? <ErrorBanner message={errorMessage} /> : null}
       <div className="flex justify-end">
         <Button type="submit" loading={pending}>
