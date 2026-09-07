@@ -1,3 +1,8 @@
+@import '@fontsource/montserrat/latin-400.css';
+@import '@fontsource/montserrat/latin-500.css';
+@import '@fontsource/montserrat/latin-600.css';
+@import '@fontsource/montserrat/latin-700.css';
+@import '@fontsource/montserrat/latin-800.css';
 @import 'tailwindcss';
 
 @theme {
@@ -14,8 +19,8 @@
   --color-canvas: #f7f7f7;
   --color-sage: #f0f0f0;
   --color-line: #d6d6d6;
-  --font-sans: Montserrat, ui-sans-serif, system-ui, sans-serif;
-  --font-serif: Montserrat, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

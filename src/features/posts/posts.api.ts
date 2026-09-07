@@ -2,7 +2,39 @@ import { http } from '../../lib/http';
 import type { Post } from '../../types';
 import { POSTS_PAGE_SIZE, nextPostsPage } from './posts.pagination';
 
+declare global {
+  interface Window {
+    __FUDO_POSTS_PREFETCH?: Promise<Response>;
+  }
+}
+
 const POSTS_PATH = '/post';
+
+async function readPrefetchedPosts(page: number): Promise<Post[] | undefined> {
+  if (page !== 1) {
+    return undefined;
+  }
+
+  const pending = window.__FUDO_POSTS_PREFETCH;
+  delete window.__FUDO_POSTS_PREFETCH;
+
+  if (pending === undefined) {
+    return undefined;
+  }
+
+  try {
+    const response = await pending;
+
+    if (!response.ok) {
+      return undefined;
+    }
+
+    const data: unknown = await response.json();
+    return Array.isArray(data) ? data : undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 export interface PostsPage {
   posts: Post[];
@@ -11,14 +43,19 @@ export interface PostsPage {
 }
 
 export async function getPostsPage(page: number): Promise<PostsPage> {
-  const { data } = await http.get<Post[]>(POSTS_PATH, {
-    params: {
-      page,
-      limit: POSTS_PAGE_SIZE,
-      sortBy: 'id',
-      order: 'desc',
-    },
-  });
+  const prefetched = await readPrefetchedPosts(page);
+  const data =
+    prefetched ??
+    (
+      await http.get<Post[]>(POSTS_PATH, {
+        params: {
+          page,
+          limit: POSTS_PAGE_SIZE,
+          sortBy: 'id',
+          order: 'desc',
+        },
+      })
+    ).data;
   const posts = Array.isArray(data) ? data : [];
 
   return {
