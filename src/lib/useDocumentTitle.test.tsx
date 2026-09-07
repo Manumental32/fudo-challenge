@@ -13,13 +13,13 @@ describe('useDocumentTitle', () => {
     document.title = '';
   });
 
-  it('sets the document title and restores Fudo on unmount', () => {
-    const { unmount } = render(<Probe title="Feed · Fudo" />);
+  it('sets the document title and restores Ovillos on unmount', () => {
+    const { unmount } = render(<Probe title="Feed · Ovillos" />);
 
-    expect(document.title).toBe('Feed · Fudo');
+    expect(document.title).toBe('Feed · Ovillos');
 
     unmount();
 
-    expect(document.title).toBe('Fudo');
+    expect(document.title).toBe('Ovillos');
   });
 });

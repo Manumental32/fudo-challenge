@@ -9,6 +9,7 @@ import { useUpdatePost } from '../features/posts/hooks/useUpdatePost';
 import { isOwnAuthor, useCurrentAuthor } from '../lib/author';
 import { formatDate } from '../lib/dates';
 import { getErrorMessage } from '../lib/errors';
+import { APP_NAME } from '../lib/brand';
 import { useDocumentTitle } from '../lib/useDocumentTitle';
 import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
@@ -26,12 +27,12 @@ export function PostDetailPage() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const currentAuthor = useCurrentAuthor();
 
-  let pageTitle = 'Cargando · Fudo';
+  let pageTitle = `Cargando · ${APP_NAME}`;
 
   if (postQuery.isSuccess && postQuery.data) {
-    pageTitle = `${postQuery.data.title} · Fudo`;
+    pageTitle = `${postQuery.data.title} · ${APP_NAME}`;
   } else if (postQuery.isError) {
-    pageTitle = 'Publicación no encontrada · Fudo';
+    pageTitle = `Publicación no encontrada · ${APP_NAME}`;
   }
 
   useDocumentTitle(pageTitle);

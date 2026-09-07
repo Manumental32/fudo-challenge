@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import { APP_NAME } from '../lib/brand';
 import { useDocumentTitle } from '../lib/useDocumentTitle';
 
 export function NotFoundPage() {
-  useDocumentTitle('Página no encontrada · Fudo');
+  useDocumentTitle(`Página no encontrada · ${APP_NAME}`);
 
   return (
     <div className="flex flex-col items-start gap-3">

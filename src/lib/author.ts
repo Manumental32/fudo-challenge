@@ -21,7 +21,7 @@ export const AVATAR_STYLES = [
 ] as const;
 
 export function avatarFor(name: string, style = 'initials'): string {
-  const seed = encodeURIComponent(name.trim() || 'fudo');
+  const seed = encodeURIComponent(name.trim() || 'ovillos');
   return `https://api.dicebear.com/9.x/${style}/svg?seed=${seed}`;
 }
 

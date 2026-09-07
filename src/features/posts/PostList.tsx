@@ -56,7 +56,7 @@ export function PostList() {
           Feed
         </p>
         <h1 className="text-xl font-extrabold tracking-tight text-ink">
-          r/fudo
+          r/ovillos
         </h1>
       </div>
 

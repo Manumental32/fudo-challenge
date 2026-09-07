@@ -1,4 +1,4 @@
-# Fudo
+# Ovillos
 
 Frontend de una red social acotada: feed de posts, detalle y comentarios anidados.
 

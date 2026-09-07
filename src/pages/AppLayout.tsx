@@ -18,7 +18,7 @@ export function AppLayout() {
           <Link
             to="/"
             className="flex items-center gap-2 no-underline"
-            aria-label="Fudo, ir al inicio"
+            aria-label="Ovillos, ir al inicio"
           >
             <img
               src={`${import.meta.env.BASE_URL}favicon.svg`}
@@ -27,8 +27,8 @@ export function AppLayout() {
               height={32}
               className="size-8"
             />
-            <span className="text-lg font-extrabold uppercase tracking-[0.14em] text-ink">
-              fudo
+            <span className="text-lg font-extrabold uppercase tracking-[0.08em] text-ink">
+              ovillos
             </span>
           </Link>
           <AuthBar />

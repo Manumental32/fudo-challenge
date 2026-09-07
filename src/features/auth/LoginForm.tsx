@@ -11,10 +11,10 @@ interface LoginFormProps {
 export function LoginForm({ onSuccess }: LoginFormProps) {
   const [name, setName] = useState('');
   const [styleIndex, setStyleIndex] = useState(0);
-  const avatarSeed = useDebouncedValue(name.trim() || 'fudo', 280);
+  const avatarSeed = useDebouncedValue(name.trim() || 'ovillos', 280);
   const choices = useMemo(() => avatarChoices(avatarSeed), [avatarSeed]);
   const selected = choices[styleIndex] ?? choices[0] ?? '';
-  const pending = (name.trim() || 'fudo') !== avatarSeed;
+  const pending = (name.trim() || 'ovillos') !== avatarSeed;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
